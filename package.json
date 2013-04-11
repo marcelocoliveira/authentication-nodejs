@@ -1,10 +1,10 @@
 {
 	"name": "node-login",
-	"version": "1.3.2-3",
+	"version": "1.3.2-5",
 	"description": "",
 	"author": {
-		"name": "Marcelo",
-		"email": "marcelooliveira@mail.com"
+		"name": "",
+		"email": ""
 	},
 	"website": {
 		"url": ""
@@ -23,7 +23,7 @@
 		"emailjs": "0.3.3"
 	},
 	"engines": {
-		"node": "0.8.x",
+		"node": "0.8.x"
 	},
 	"scripts": {
 		"start": "node app"
