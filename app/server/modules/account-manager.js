@@ -1,36 +1,24 @@
 
 var crypto 		= require('crypto')
-var MongoDB 	= require('mongodb').Db;
-var Server 		= require('mongodb').Server;
+var mongo = require('mongodb').MongoClient;
+var uri = "mongodb://nodejitsu_marcelooliveira:7rh24r89l8ca1qk56sj826mlb0@ds059907.mongolab.com:59907/nodejitsu_marcelooliveira_nodejitsudb8856351438";
 var moment 		= require('moment');
-
-var dbPort 		= 10068;
-var dbHost 		= 'linus.mongohq.com';
-var dbName 		= 'node-login';
-var dbUsername	=	"nodejitsu";
-var dbPassword  =  "97bab88d080dc1b68d3b60f73bb64d3a"
+var accounts = null;
 
 /* establish the database connection */
 
-var db = new MongoDB(dbName, new Server(dbHost, dbPort, {auto_reconnect: true}), {w: 1});
-	db.open(function(e, d){
-	if (e) {
-		console.log(e);
-	}	else{
-		db.authenticate(dbUsername, dbPassword, function authenticate(err, replies) {
-			if (e) {
-				console.log(e);
-			}
-			else {
-				console.log('connected to database :: ' + dbName);
-			}
-		});
-		
-	}
-});
-var accounts = db.collection('accounts');
+mongo.connect(uri, function (err, db){
+	if (err){
+		console.log("error, unable to connect to db");
+		return;
+	}  else {
+		accounts = db.collection('accounts');
+		console.log('conencted to db');
 
-/* login validation methods */
+	}
+
+});
+  
 
 exports.autoLogin = function(user, pass, callback)
 {
@@ -64,6 +52,7 @@ exports.manualLogin = function(user, pass, callback)
 
 exports.addNewAccount = function(newData, callback)
 {
+	console.log("got here");
 	accounts.findOne({user:newData.user}, function(e, o) {
 		if (o){
 			callback('username-taken');
